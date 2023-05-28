@@ -1,0 +1,17 @@
+기존 alexNet이나 이번 maml의 코드와 동일하게 데이터 전처리를 진행할려했으나 계획대로 잘 되지 못하여 다음과 같이 수정했습니다
+1. 기존 alexNet이나 maaml 코드는 input_shape이 (256,256,3)이 었는데 flow_from_directory함수가 잘 작동하지 않아여 (32,32,3)으로 학습했습니다.
+
+2. alexNet의 input이 변경됨에 따라 모델 구조에서 일부분이 학습이 가능하기 위해 변경하였으며(pooling size변경) 변경된 코드 옆에는 주석으로 원래코드 적어놓았습니다.
+
+3. alexNet을 기준으로 나머지 모델들를 변경하였습니다.
+
+4. 기존 alexNet에 맞춰서 나머지 모델들도 다음 코드와 같이 동일하게 처리했습니다
+-model.compile(loss='categorical_crossentropy',optimizer='adam',metrics=['accuracy'])
+-epochs_num = 30
+history = model.fit_generator(
+    train_generator, 
+    steps_per_epoch=train_generator.n//train_generator.batch_size,
+    validation_data=valid_generator,
+    validation_steps=valid_generator.n//valid_generator.batch_size,
+    shuffle=True,
+    epochs=epochs_num)
